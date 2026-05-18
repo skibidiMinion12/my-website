@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My School Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f0e8;
+      --ink: #1a1a2e;
+      --accent: #e84855;
+      --accent2: #3a86ff;
+      --card: #ffffff;
+      --muted: #6b6b80;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3rem;
+      background: var(--ink);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    nav .logo span { color: var(--accent); }
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    nav ul a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 88vh;
+      align-items: center;
+    }
+    .hero-text {
+      padding: 5rem 3rem 5rem 5rem;
+      animation: fadeUp 0.9s ease both;
+    }
+    .hero-text .eyebrow {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      font-weight: 400;
+      margin-bottom: 1.2rem;
+    }
+    .hero-text h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-text h1 em {
+      font-style: normal;
+      color: var(--accent2);
+    }
+    .hero-text p {
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 460px;
+      margin-bottom: 2.5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--ink);
+    }
+
+    .hero-visual {
+      background: var(--ink);
+      height: 100%;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 1.2s ease both;
+    }
+    .hero-visual .big-letter {
+      font-family: 'Syne', sans-serif;
+      font-size: 28vw;
+      font-weight: 800;
+      color: rgba(255,255,255,0.04);
+      position: absolute;
+      user-select: none;
+      line-height: 1;
+    }
+    .hero-visual .card-stack {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 2rem;
+    }
+    .info-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.2rem 1.6rem;
+      color: #fff;
+      min-width: 260px;
+    }
+    .info-card .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.4rem;
+    }
+    .info-card .value {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .info-card .value .dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+
+    /* ABOUT */
+    #about {
+      padding: 6rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      background: var(--card);
+    }
+    #about h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+    }
+    #about h2 span { color: var(--accent); }
+    #about p {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .stat-row {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+    .stat { }
+    .stat .num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--accent2);
+      line-height: 1;
+    }
+    .stat .desc {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .about-img {
+      background: var(--bg);
+      border-radius: 16px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 6rem;
+      border: 2px solid rgba(0,0,0,0.06);
+    }
+
+    /* TOPICS */
+    #topics {
+      padding: 6rem 5rem;
+    }
+    #topics .section-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+    #topics h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 3rem;
+    }
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .topic-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(0,0,0,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: default;
+    }
+    .topic-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+    .topic-card .icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    .topic-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .topic-card p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--muted);
+      font-weight: 300;
+    }
+    .topic-card .tag {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.25rem 0.75rem;
+      background: var(--bg);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2.5rem;
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+    footer span { color: var(--accent); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .hero-text { padding: 4rem 2rem; }
+      #about { grid-template-columns: 1fr; padding: 4rem 2rem; }
+      .about-img { display: none; }
+      #topics { padding: 4rem 2rem; }
+      .topics-grid { grid-template-columns: 1fr; }
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">My<span>Project</span></div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#topics">Topics</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <div class="eyebrow">School Project — 2025</div>
+      <h1>Welcome to My <em>Project</em> Website</h1>
+      <p>This is a test page to make sure everything is working. Once it looks good, you can update the content with your real project details!</p>
+      <a href="#about" class="btn">Explore →</a>
+    </div>
+    <div class="hero-visual">
+      <div class="big-letter">P</div>
+      <div class="card-stack">
+        <div class="info-card">
+          <div class="label">Status</div>
+          <div class="value"><span class="dot"></span>Live & Working</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Student</div>
+          <div class="value">Your Name Here</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Subject</div>
+          <div class="value">Your Subject Here</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div>
+      <h2>About This <span>Project</span></h2>
+      <p>This is the about section. Replace this text with a description of what your project is about — what topic you're covering, why you chose it, and what you hope to show.</p>
+      <p>You can add as much detail as you want here. Talk about your research, your goals, or anything else relevant to your school project.</p>
+      <div class="stat-row">
+        <div class="stat">
+          <div class="num">1</div>
+          <div class="desc">Topic</div>
+        </div>
+        <div class="stat">
+          <div class="num">3</div>
+          <div class="desc">Sections</div>
+        </div>
+        <div class="stat">
+          <div class="num">A+</div>
+          <div class="desc">Goal</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-img">📚</div>
+  </section>
+
+  <!-- TOPICS -->
+  <section id="topics">
+    <div class="section-label">Key Points</div>
+    <h2>Project Topics</h2>
+    <div class="topics-grid">
+      <div class="topic-card">
+        <div class="icon">🔍</div>
+        <h3>Point One</h3>
+        <p>Replace this with the first main point or topic of your project. Add supporting details or facts here.</p>
+        <span class="tag">Research</span>
+      </div>
+      <div class="topic-card">
+        <div class="icon">💡</div>
+        <h3>Point Two</h3>
+        <p>Replace this with the second main point or topic. You can add images, quotes, or data to support it.</p>
+        <span class="tag">Analysis</span>
+      </div>
+      <div class="topic-card">
+        <div class="icon">✅</div>
+        <h3>Conclusion</h3>
+        <p>Summarize what you found or learned in your project. What's the big takeaway from your research?</p>
+        <span class="tag">Summary</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    Made with <span>♥</span> for school — update this with your name &amp; class
+  </footer>
+
+</body>
+</html>
