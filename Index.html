@@ -781,11 +781,11 @@ function showPassed(){
 
 $('toBook').addEventListener('click', ()=>{
   showPassed();
-  loadCalendly();
+  // Calendly is already loaded once below — don't re-initialize it (that causes a blank widget).
   document.getElementById('book').scrollIntoView({behavior:'smooth'});
 });
 
-/* load (or show setup notice) on first paint too */
+/* load the booking widget (or setup notice) a single time on page load */
 loadCalendly();
 
 /* ============================================================
