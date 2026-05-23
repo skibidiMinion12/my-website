@@ -212,8 +212,9 @@ img,svg{display:block;max-width:100%}
   position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
   z-index:3;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
   color:rgba(245,245,247,.4);display:flex;flex-direction:column;align-items:center;gap:10px;
-  opacity:0;animation:rise 1s var(--ease) 1.4s forwards;
+  opacity:0;animation:scrollHintIn 1s var(--ease) 1.4s forwards;
 }
+@keyframes scrollHintIn{from{opacity:0;transform:translate(-50%,22px)}to{opacity:1;transform:translate(-50%,0)}}
 .scroll-hint .line{width:1px;height:34px;background:linear-gradient(rgba(245,245,247,.5),transparent);animation:scrollPulse 2s ease-in-out infinite}
 @keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
 
@@ -404,7 +405,7 @@ select:focus,input:focus{outline:0;border-color:var(--accent);background:#fff;bo
   padding:14px;box-shadow:0 30px 70px -50px rgba(0,0,0,.4);overflow:hidden;min-height:680px;
   position:relative;
 }
-.calendly-inline-widget{min-height:660px;border-radius:18px;overflow:hidden}
+.calendly-inline-widget{width:100%;min-width:0;min-height:660px;height:660px;border-radius:18px;overflow:hidden}
 .book-setup{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;padding:80px 30px;min-height:640px;
@@ -434,6 +435,23 @@ footer{background:var(--bg-dark);color:#f5f5f7;padding:80px 0 40px}
 .foot-col a,.foot-col span{display:block;color:rgba(245,245,247,.72);font-size:14.5px;margin-bottom:12px;transition:color .25s}
 .foot-col a:hover{color:var(--accent-bright)}
 .foot-bottom{padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:rgba(245,245,247,.4)}
+
+/* ---------- mobile fixes ---------- */
+@media(max-width:680px){
+  /* scroll hint collides with the wrapped hero buttons on small screens — hide it */
+  .scroll-hint{display:none}
+  /* tighten section rhythm so things breathe on phones */
+  .section-pad{padding:78px 0}
+  .wrap{padding:0 18px}
+  /* give the Calendly embed the full screen width (it was overflowing the sides) */
+  .book-shell{padding:8px;min-height:0}
+  .calendly-inline-widget{height:1040px;min-height:1040px;border-radius:12px}
+  .hero{padding:110px 22px 70px}
+}
+@media(max-width:380px){
+  .wrap{padding:0 12px}
+  .book-shell{padding:5px}
+}
 
 </style>
 </head>
@@ -768,7 +786,7 @@ function loadCalendly(){
     url += (url.includes('?')?'&':'?') + params.toString();
   }
 
-  shell.innerHTML = '<div class="calendly-inline-widget" data-url="'+url+'" style="min-width:320px;height:660px;"></div>';
+  shell.innerHTML = '<div class="calendly-inline-widget" data-url="'+url+'"></div>';
   if(window.Calendly && Calendly.initInlineWidgets){ Calendly.initInlineWidgets(); }
 }
 
