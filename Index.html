@@ -670,6 +670,10 @@ const CONFIG = {
 
   pricePerHeadlight: 50,
 
+  // Optional: auto-fill a Calendly PLAIN-TEXT question with the estimate (brand/year/headlights/total).
+  // Leave null to send nothing. To turn on, set to the text question's slot, e.g. "a2". Don't use a phone question.
+  prefillAnswerSlot: null,
+
   // Business contact (also shown in footer)
   phone: "281-967-1528",
   email: "hello@nrmheadlights.com",   // ← update to your real email
@@ -754,10 +758,15 @@ function loadCalendly(){
     return;
   }
 
-  // Build a prefilled Calendly URL: vehicle details go into the "a1" custom answer.
-  const params = new URLSearchParams();
-  params.set('a1', buildDetails());           // -> add a custom question in Calendly to capture this
-  const url = CONFIG.calendlyUrl + (CONFIG.calendlyUrl.includes('?')?'&':'?') + params.toString();
+  // No prefill by default (prevents text landing in Calendly's phone field).
+  // To auto-fill a PLAIN-TEXT question with the estimate later, set
+  // CONFIG.prefillAnswerSlot to that question's slot, e.g. "a2". Never point it at a phone question.
+  let url = CONFIG.calendlyUrl;
+  if(CONFIG.prefillAnswerSlot){
+    const params = new URLSearchParams();
+    params.set(CONFIG.prefillAnswerSlot, buildDetails());
+    url += (url.includes('?')?'&':'?') + params.toString();
+  }
 
   shell.innerHTML = '<div class="calendly-inline-widget" data-url="'+url+'" style="min-width:320px;height:660px;"></div>';
   if(window.Calendly && Calendly.initInlineWidgets){ Calendly.initInlineWidgets(); }
